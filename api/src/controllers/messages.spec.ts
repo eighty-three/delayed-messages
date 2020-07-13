@@ -2,7 +2,7 @@ import request from 'supertest';
 import http from 'http';
 import app from '../app';
 import * as messages from '../models/messages';
-const server = http.createServer(app).listen(8081);
+const server = http.createServer(app).listen(8090); // Different port for tests
 
 //Input for createMessage
 const [ hours, minutes, message ] = [23, 59, 'test message'];

@@ -38,11 +38,8 @@ export default function Home({ url, target, message, expire, currentTime, error 
         }
 
         {messageContents.target
-          ? (
-            <Countdown timeRemaining={count} setCounter={countDown} />
-          ) : ( 
-            <p>{messageContents.message}</p>
-          )
+          ? <Countdown timeRemaining={count} setCounter={countDown} />
+          : <p>{messageContents.message}</p>
         }
       </section>
     </Layout>

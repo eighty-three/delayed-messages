@@ -5,7 +5,6 @@ import { useState } from 'react';
 import Layout, { siteTitle } from '@/components/Layout';
 
 import Countdown from '@/components/Countdown';
-import MessageContent from '@/components/MessageContent';
 import { getMessageData } from '@/lib/messages';
 import { getTime } from '@/lib/time';
 
@@ -42,7 +41,7 @@ export default function Home({ url, target, message, expire, currentTime, error 
           ? (
             <Countdown timeRemaining={count} setCounter={countDown} />
           ) : ( 
-            <MessageContent message={messageContents.message} />
+            <p>{messageContents.message}</p>
           )
         }
       </section>

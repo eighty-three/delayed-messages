@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import ky from 'ky-universal';
-import HOST from './host';
+import HOST from '@/lib/host';
 const api = `${HOST}/api/messages`;
 
 export async function getMessageData(id) {

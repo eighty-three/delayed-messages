@@ -1,18 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
-const Time = ({ time, unit }) => {
-  const unitString = (time > 1)
-    ? `${unit}s`
-    : unit;
+import Time from '@/components/Time';
 
-  if (time > 0) {
-    return (
-      <span> {time} {unitString} </span>
-    );
-  }
-};
-
-export default function Countdown({ setCounter, timeRemaining }) {
+const Countdown = ({ setCounter, timeRemaining }) => {
   const timeOut = useRef(null);
   useEffect(() => {
     if (timeRemaining >= 0) timeOut.current = setTimeout(setCounter, 1050);
@@ -33,10 +23,17 @@ export default function Countdown({ setCounter, timeRemaining }) {
 
   return (
     <> 
-      {(hours > 0) && <Time time={hours} unit="hour" />}
-      {(minutes > 0) && <Time time={minutes} unit="minute" />}
-      {(seconds > 0) && <Time time={seconds} unit="second" />}
-      {(timeRemaining > 0) && <p>until the message arrives!</p>}
+      {(timeRemaining !== 0)
+        ? (
+          <>
+            <Time hours={hours} minutes={minutes} seconds={seconds} />
+            {(timeRemaining > 0) && <span> until the message arrives!</span>}
+          </>
+        ) : (
+          <p>Getting your message..</p>
+        )}
     </>
   );
-}
+};
+
+export default Countdown;

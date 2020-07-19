@@ -27,7 +27,7 @@ const Countdown = ({ setCounter, timeRemaining }) => {
         ? (
           <>
             <Time hours={hours} minutes={minutes} seconds={seconds} />
-            {(timeRemaining > 0) && <span> until the message arrives!</span>}
+            <span> until the message arrives!</span>
           </>
         ) : (
           <p>Getting your message..</p>

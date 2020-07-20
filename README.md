@@ -70,32 +70,13 @@ The data the server sends back to the client depends on the values of `current`,
     const deletedMessage = await messages.deleteMessage(id);
     console.dir(`Deleted ${deletedMessage.id} at ${current}`);
     res.status(410).json({ error: 'Deleted URL', statusCode: 410 });
+
   } else if (current > target) {
     res.json({ 'message': message.message, 'expire': expire });
+
   } else if (current < target) {
     res.json({ 'target': target });
   }
-```
-
-For the countdown:
-```javascript
-      {(timeRemaining !== 0)
-        ? (
-          <>
-            <Time hours={hours} minutes={minutes} seconds={seconds} />
-            <span> until the message arrives!</span>
-          </>
-        ) : (
-          <p>Getting your message..</p>
-        )}
-```
-
-For the message reveal:
-```javascript
-        {messageContents.target
-          ? <Countdown timeRemaining={count} setCounter={countDown} />
-          : <p>{messageContents.message}</p>
-        }
 ```
 
 ### Countdown

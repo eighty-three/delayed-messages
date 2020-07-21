@@ -2,9 +2,9 @@ import Router from 'next/router';
 import ky from 'ky-universal';
 import HOST from '@/lib/host';
 const api = `${HOST}/api/messages`;
-const projectUrl = (process.env.NODE_ENV !== 'production')
-  ? ''
-  : '/projects/delayed-messages';
+const projectUrl = (HOST === 'https://eighty-three.dev')
+  ? '/projects/delayed-messages'
+  : '';
 
 export async function getMessageData(id) {
   try {

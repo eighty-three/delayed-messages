@@ -113,32 +113,7 @@ The `Countdown` component uses the following `useEffect` hook to decrease the `c
   }, [timeRemaining]);
 ```
 
-When the `count` finally goes to zero (`count > 0` from the `countDown` function), it queries the server to update `messageContents` in order to trigger this condition:
-```javascript
-        {messageContents.target
-          ? <Countdown timeRemaining={count} setCounter={countDown} />
-          : <p>{messageContents.message}</p>
-        }
-```
-
-### Server time
-A function to get the time from the server is included so that the displayed countdown works properly
-```javascript
-// /api/src/controllers/time.ts
-  const current: number = Math.floor(Date.now() / 1000);
-  res.json({ currentTime: current });
-```
-```javascript
-// /client/src/pages/messages/[id].jsx
-  const newTime = await getTime();
-  ...
-  return {
-      props: {
-  			url,
-        ...message,
-        currentTime: newTime.currentTime
-      }
-	};
+When the `count` finally goes to zero (`count > 0` from the `countDown` function), it queries the server to update `messageContents`
 ```
 
 ### URL deleted from database

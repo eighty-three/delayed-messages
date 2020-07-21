@@ -2,6 +2,9 @@ import Router from 'next/router';
 import ky from 'ky-universal';
 import HOST from '@/lib/host';
 const api = `${HOST}/api/messages`;
+const projectUrl = (process.env.NODE_ENV !== 'production')
+  ? ''
+  : '/projects/delayed-messages';
 
 export async function getMessageData(id) {
   try {
@@ -24,6 +27,6 @@ export async function submitMessage(data) {
         }
     });
   const url = await submit.json();
-  Router.push('/messages/[id]', `/messages/${url}`);
+  Router.push(`${projectUrl}/messages/[id]`, `${projectUrl}/messages/${url}`);
 }
 

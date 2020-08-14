@@ -8,7 +8,7 @@ import Countdown from '@/components/Countdown';
 import { getMessageData } from '@/lib/messages';
 import { getTime } from '@/lib/time';
 
-export default function Home({ url, target, message, expire, currentTime, error }) {
+export default function Home({ url, target, message, currentTime, error }) {
   const [ messageContents, setMessageContents ] = useState({target, currentTime, message});
   const timeRemaining = target - currentTime;
   const [ count, setCount ] = useState(timeRemaining);

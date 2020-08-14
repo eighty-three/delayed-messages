@@ -24,4 +24,4 @@ const Time = ({ hours, minutes, seconds }) => {
   );
 };
 
-export default Time
+export default Time;

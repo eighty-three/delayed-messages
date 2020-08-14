@@ -1,9 +1,17 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 const fixString = (time, unit) => {
   return (time > 1)
     ? `${unit}s`
     : unit;
+};
+
+const propTypes = {
+  hours: PropTypes.number,
+  minutes: PropTypes.number,
+  seconds: PropTypes.number
 };
 
 const Time = ({ hours, minutes, seconds }) => {
@@ -23,5 +31,7 @@ const Time = ({ hours, minutes, seconds }) => {
     </>
   );
 };
+
+Time.propTypes = propTypes;
 
 export default Time;

@@ -1,6 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import Time from '@/components/Time';
+
+const propTypes = {
+  setCounter: PropTypes.func,
+  timeRemaining: PropTypes.number
+};
 
 const Countdown = ({ setCounter, timeRemaining }) => {
   const timeOut = useRef(null);
@@ -35,5 +41,7 @@ const Countdown = ({ setCounter, timeRemaining }) => {
     </>
   );
 };
+
+Countdown.propTypes = propTypes;
 
 export default Countdown;

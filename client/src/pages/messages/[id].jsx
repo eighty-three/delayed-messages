@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import Layout, { siteTitle } from '@/components/Layout';
@@ -7,6 +8,14 @@ import Layout, { siteTitle } from '@/components/Layout';
 import Countdown from '@/components/Countdown';
 import { getMessageData } from '@/lib/messages';
 import { getTime } from '@/lib/time';
+
+const propTypes = {
+  url: PropTypes.string,
+  target: PropTypes.number,
+  message: PropTypes.string,
+  currentTime: PropTypes.number,
+  error: PropTypes.string
+};
 
 export default function Home({ url, target, message, currentTime, error }) {
   const [ messageContents, setMessageContents ] = useState({target, currentTime, message});
@@ -46,6 +55,8 @@ export default function Home({ url, target, message, currentTime, error }) {
   );
 }
 
+Home.propTypes = propTypes;
+
 export async function getServerSideProps({ query: { id: url }, res }) {
   const message = await getMessageData(url);
   const newTime = await getTime();
@@ -59,4 +70,3 @@ export async function getServerSideProps({ query: { id: url }, res }) {
     }
   };
 }
-

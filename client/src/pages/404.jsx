@@ -1,4 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  statusCode: PropTypes.number,
+  error: PropTypes.string
+};
 
 export default function Custom404({statusCode, error}) {
   return (
@@ -8,3 +14,4 @@ export default function Custom404({statusCode, error}) {
   );
 }
 
+Custom404.propTypes = propTypes;

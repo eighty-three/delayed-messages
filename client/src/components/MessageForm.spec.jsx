@@ -13,7 +13,7 @@ import MessageForm from './MessageForm';
 describe('message form', () => {
   let placeholderFn, component, message, hours, minutes, form;
 
-  beforeEach(async () => { // using mockFn.mockClear(); isn't working for some reason so I resorted to this...
+  beforeEach(async () => { // using mockFn.mockClear() isn't working for some reason so I resorted to this...
     placeholderFn = jest.fn();
     component = render(<MessageForm onSubmit={placeholderFn} />);
     message = getByLabelText(component.container, 'Message:');
@@ -24,7 +24,7 @@ describe('message form', () => {
 
   afterEach(async () => {
     component.unmount();
-    // placeholderFn.mockReset();
+    // placeholderFn.mockClear();
     // form.reset();
   });
 

@@ -14,7 +14,9 @@ describe('message form', () => {
   let placeholderFn, component, message, hours, minutes, form;
 
   beforeEach(async () => { // using mockFn.mockClear() isn't working for some reason so I resorted to this...
-    placeholderFn = jest.fn();
+    placeholderFn = jest.fn((data) => {
+      return data;
+    });
     component = render(<MessageForm onSubmit={placeholderFn} />);
     message = getByLabelText(component.container, 'Message:');
     hours = getByLabelText(component.container, 'Hours');
@@ -44,6 +46,11 @@ describe('message form', () => {
     });
 
     expect(placeholderFn).toHaveBeenCalledTimes(1);
+    expect(placeholderFn).toHaveBeenCalledWith({
+      content: 'test message form',
+      hours: '23',
+      minutes: '59'
+    }, expect.anything());
 
     expect(message.value).toEqual('test message form');
     expect(hours.value).toEqual('23');
@@ -118,6 +125,11 @@ describe('message form', () => {
     });
 
     expect(placeholderFn).toHaveBeenCalledTimes(1);
+    expect(placeholderFn).toHaveBeenCalledWith({
+      content: 'test message form',
+      hours: '9999',
+      minutes: '9999'
+    }, expect.anything());
 
     expect(message.value).toEqual('test message form');
     expect(hours.value).toEqual('9999');

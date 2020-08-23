@@ -1,7 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Time from './Time';
+import '@testing-library/jest-dom/extend-expect';
 import 'jsdom-global/register';
+import { render } from '@testing-library/react';
+
+import Time from './Time';
+
 
 describe('basic behavior', () => {
   test('hours, minutes, seconds', () => {
@@ -11,12 +14,10 @@ describe('basic behavior', () => {
       seconds: 2
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.hours} hours`);
-    expect(component.find('span').at(1).text()).toEqual(', ');
-    expect(component.find('span').at(2).text()).toEqual(`${time.minutes} minutes`);
-    expect(component.find('span').at(3).text()).toEqual(' and ');
-    expect(component.find('span').at(4).text()).toEqual(`${time.seconds} seconds`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.hours} hours, ${time.minutes} minutes and ${time.seconds} seconds`
+    );
   });
 
   test('zero/null/mistaken key', () => {
@@ -25,8 +26,8 @@ describe('basic behavior', () => {
       seconds: 0
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.children().exists()).toEqual(false); //Component still renders but without any content, just the Fragment
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).not.toHaveTextContent();
   });
 });
 
@@ -38,12 +39,10 @@ describe('testing specific combinations', () => {
       seconds: 1
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.hours} hour`);
-    expect(component.find('span').at(1).text()).toEqual(', ');
-    expect(component.find('span').at(2).text()).toEqual(`${time.minutes} minute`);
-    expect(component.find('span').at(3).text()).toEqual(' and ');
-    expect(component.find('span').at(4).text()).toEqual(`${time.seconds} second`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.hours} hour, ${time.minutes} minute and ${time.seconds} second`
+    );
   });
 
   test('hours, seconds', () => {
@@ -52,10 +51,10 @@ describe('testing specific combinations', () => {
       seconds: 2
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.hours} hours`);
-    expect(component.find('span').at(1).text()).toEqual(' and ');
-    expect(component.find('span').at(2).text()).toEqual(`${time.seconds} seconds`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.hours} hours and ${time.seconds} seconds`
+    );
   });
 
   test('hours, minutes', () => {
@@ -65,10 +64,10 @@ describe('testing specific combinations', () => {
       seconds: 0
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.hours} hours`);
-    expect(component.find('span').at(1).text()).toEqual(' and ');
-    expect(component.find('span').at(2).text()).toEqual(`${time.minutes} minutes`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.hours} hours and ${time.minutes} minutes`
+    );
   });
 
   test('minutes, seconds', () => {
@@ -77,19 +76,21 @@ describe('testing specific combinations', () => {
       seconds: 2
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.minutes} minutes`);
-    expect(component.find('span').at(1).text()).toEqual(' and ');
-    expect(component.find('span').at(2).text()).toEqual(`${time.seconds} seconds`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.minutes} minutes and ${time.seconds} seconds`
+    );
   });
 
   test('hours', () => {
     const time = {
-      hours: 1
+      hours: 2
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.hours} hour`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.hours} hours`
+    );
   });
 
   test('minutes', () => {
@@ -98,8 +99,10 @@ describe('testing specific combinations', () => {
       seconds: 0
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.minutes} minutes`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.minutes} minutes`
+    );
   });
 
   test('seconds', () => {
@@ -107,23 +110,9 @@ describe('testing specific combinations', () => {
       seconds: 2
     };
 
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.seconds} seconds`);
+    const component = render(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
+    expect(component.container).toHaveTextContent(
+      `${time.seconds} seconds`
+    );
   });
-
-  test('hours, minutes, seconds', () => {
-    const time = {
-      hours: 3,
-      minutes: 2,
-      seconds: 2
-    };
-
-    const component = shallow(<Time hours={time.hours} minutes={time.minutes} seconds={time.seconds} />);
-    expect(component.find('span').at(0).text()).toEqual(`${time.hours} hours`);
-    expect(component.find('span').at(1).text()).toEqual(', ');
-    expect(component.find('span').at(2).text()).toEqual(`${time.minutes} minutes`);
-    expect(component.find('span').at(3).text()).toEqual(' and ');
-    expect(component.find('span').at(4).text()).toEqual(`${time.seconds} seconds`);
-  });
-
 });

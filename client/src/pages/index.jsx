@@ -4,6 +4,7 @@ import React from 'react';
 import Layout, { siteTitle } from '@/components/Layout';
 
 import MessageForm from '@/components/MessageForm';
+import { submitMessage } from '@/lib/messages';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         <title>{siteTitle}</title>
       </Head>
       <section>
-        <MessageForm />
+        <MessageForm onSubmit={submitMessage} />
       </section>
     </Layout>
   );

@@ -4,9 +4,14 @@ import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import { submitMessage } from '@/lib/messages';
 
-const MessageForm = () => {
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  onSubmit: PropTypes.func
+};
+
+const MessageForm = ({ onSubmit }) => {
   const { register, handleSubmit } = useForm();
 
   return (
@@ -22,7 +27,7 @@ const MessageForm = () => {
       </style>
 
       <div className="w-75 mx-auto">
-        <Form className="mx-auto" onSubmit={handleSubmit(submitMessage)}>
+        <Form className="mx-auto" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId='formContent'>
             <Form.Label>Message:</Form.Label>
             <Form.Control 
@@ -76,5 +81,7 @@ const MessageForm = () => {
     </>
   );
 };
+
+MessageForm.propTypes = propTypes;
 
 export default MessageForm;

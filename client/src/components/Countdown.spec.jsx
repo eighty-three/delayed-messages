@@ -5,7 +5,6 @@ import { render } from '@testing-library/react';
 
 import Countdown from './Countdown';
 
-
 describe('testing counting down', () => {
   const placeholderFn = jest.fn();
   let component;

@@ -17,7 +17,7 @@ const propTypes = {
   error: PropTypes.string
 };
 
-export default function Home({ url, target, message, currentTime, error }) {
+export default function DelayedMessage({ url, target, message, currentTime, error }) {
   const [ messageContents, setMessageContents ] = useState({target, currentTime, message});
   const timeRemaining = target - currentTime;
   const [ count, setCount ] = useState(timeRemaining);
@@ -55,7 +55,7 @@ export default function Home({ url, target, message, currentTime, error }) {
   );
 }
 
-Home.propTypes = propTypes;
+DelayedMessage.propTypes = propTypes;
 
 export async function getServerSideProps({ query: { id: url }, res }) {
   const message = await getMessageData(url);

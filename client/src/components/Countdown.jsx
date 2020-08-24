@@ -11,7 +11,7 @@ const propTypes = {
 const Countdown = ({ setCounter, timeRemaining }) => {
   const timeOut = useRef(null);
   useEffect(() => {
-    timeOut.current = setTimeout(setCounter, 1050);
+    timeOut.current = setTimeout(setCounter, 1000);
     /* setTimeout is not accurate but it only affects visual data because
      * the time that the delay actually relies on is from the server anyway
      * You'll just have to refresh the page for it to count down properly.. 

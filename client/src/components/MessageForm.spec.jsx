@@ -14,20 +14,12 @@ describe('message form', () => {
   let placeholderFn, component, message, hours, minutes, form;
 
   beforeEach(async () => { // using mockFn.mockClear() isn't working for some reason so I resorted to this...
-    placeholderFn = jest.fn((data) => {
-      return data;
-    });
+    placeholderFn = jest.fn();
     component = render(<MessageForm onSubmit={placeholderFn} />);
     message = getByLabelText(component.container, 'Message:');
     hours = getByLabelText(component.container, 'Hours');
     minutes = getByLabelText(component.container, 'Minutes');
     form = component.container.querySelector('form');
-  });
-
-  afterEach(async () => {
-    component.unmount();
-    // placeholderFn.mockClear();
-    // form.reset();
   });
 
   test('basic behaviour', async () => {
@@ -90,7 +82,8 @@ describe('message form', () => {
         target: { value: 'test message form' }
       });
       fireEvent.change(hours, {
-        target: { value: 24 } // Jest's tests don't recognize the form's restrictions, but the browser does, for some reason
+        target: { value: 24 } 
+        // Jest's tests don't recognize the form's restrictions, but the browser does, for some reason
       });
       fireEvent.change(minutes, {
         target: { value: 'a' }

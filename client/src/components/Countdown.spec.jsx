@@ -7,25 +7,17 @@ import Countdown from './Countdown';
 
 describe('testing counting down', () => {
   const placeholderFn = jest.fn();
-  let component;
-
-  jest.useFakeTimers();
-
-  afterEach(() => {
-    component.unmount();
-  });
 
   test('down to 0', () => {
-    component = render(<Countdown setCounter={placeholderFn} timeRemaining={0} />);
-
+    const component = render(<Countdown setCounter={placeholderFn} timeRemaining={0} />);
     expect(component.container).toHaveTextContent(
       'Getting your message..'
     );
   });
 
   test('down to 1', () => {
-    component = render(<Countdown setCounter={placeholderFn} timeRemaining={1} />);
-
+    jest.useFakeTimers();
+    const component = render(<Countdown setCounter={placeholderFn} timeRemaining={1} />);
     jest.runAllTimers();
 
     expect(placeholderFn).toHaveBeenCalledTimes(1);

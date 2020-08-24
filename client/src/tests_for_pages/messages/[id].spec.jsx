@@ -8,34 +8,27 @@ global.MutationObserver = window.MutationObserver;
 import { act, render, fireEvent } from '@testing-library/react';
 import { getByLabelText, getByText } from '@testing-library/dom';
 
-import Router from 'next/router';
-import { submitMessage } from '@/lib/messages';
+import { getMessageData } from '@/lib/messages';
 jest.mock('@/lib/messages');
-jest.mock('next/router');
 
-import Home from './index';
+import DelayedMessage from '@/pages/messages/[id]';
 
 describe('components are rendering', () => {
-  test('for MessageForm', () => {
-    const component = render(<Home />);
-    expect(getByLabelText(component.container, 'Message:')).toBeInTheDocument;
-  });
-
   test('for Navbar', () => {
-    const component = render(<Home />);
+    const component = render(<DelayedMessage />);
     expect(getByText(component.container, 'Delayed Messages')).toBeInTheDocument;
   });
 });
 
 describe('for submitting', () => {
-  submitMessage.mockResolvedValue(Router.push('/messages/[id]'));
+  getMessageData.mockResolvedValue('s');
 
   afterEach(() => {
-    submitMessage.mockClear();
+    getMessageData.mockClear();
   });
 
   test('submit success', async () => {
-    const component = render(<Home />);
+    const component = render(<DelayedMessage />);
     const message = getByLabelText(component.container, 'Message:');
     const hours = getByLabelText(component.container, 'Hours');
     const minutes = getByLabelText(component.container, 'Minutes');
@@ -55,12 +48,11 @@ describe('for submitting', () => {
       fireEvent.submit(form);
     });
 
-    expect(submitMessage).toHaveBeenCalledTimes(1);
-    expect(Router.push).toHaveBeenCalledWith('/messages/[id]');
+    expect(getMessageData).toHaveBeenCalledTimes(1);
   });
 
   test('submit fail', async () => {
-    const component = render(<Home />);
+    const component = render(<DelayedMessage />);
     const hours = getByLabelText(component.container, 'Hours');
     const minutes = getByLabelText(component.container, 'Minutes');
     const form = component.container.querySelector('form');
@@ -77,6 +69,6 @@ describe('for submitting', () => {
       fireEvent.submit(form);
     });
 
-    expect(submitMessage).toHaveBeenCalledTimes(0);
+    expect(getMessageData).toHaveBeenCalledTimes(0);
   });
 });

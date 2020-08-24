@@ -2,7 +2,7 @@ module.exports = {
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/tests/styleMock.js',
+    '\\.(scss|css|less)$': '<rootDir>/tests/styleMock.js',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',

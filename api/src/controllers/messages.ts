@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { messages } from '../models';
 import shortid from 'shortid';
 
-export const createMessage: RequestHandler = async (req, res ) => {
+export const createMessage: RequestHandler = async (req, res) => {
   const { hours, minutes, message } = req.body; 
   const seconds: number = (hours === 0 && minutes === 0)
     ? 10 //If both are equal to zero, add a 10 second buffer
@@ -17,7 +17,7 @@ export const createMessage: RequestHandler = async (req, res ) => {
 };
 
 
-export const getMessage: RequestHandler = async (req, res ) => {
+export const getMessage: RequestHandler = async (req, res) => {
   const id: string = req.params.id;
   const message = await messages.getMessage(id);
   if (!message) {

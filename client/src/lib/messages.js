@@ -27,6 +27,6 @@ export async function submitMessage(data) {
         }
     });
   const url = await submit.json();
-  Router.push(`${projectUrl}/messages/[id]`, `${projectUrl}/messages/${url}`);
+  Router.push(`${projectUrl}/[id]`, `${projectUrl}/${url}`);
 }
 

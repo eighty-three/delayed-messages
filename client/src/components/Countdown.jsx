@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import * as workerTimers from 'worker-timers';
 
 import Time from '@/components/Time';
 
@@ -11,12 +12,8 @@ const propTypes = {
 const Countdown = ({ setCounter, timeRemaining }) => {
   const timeOut = useRef(null);
   useEffect(() => {
-    timeOut.current = setTimeout(setCounter, 1000);
-    /* setTimeout is not accurate but it only affects visual data because
-     * the time that the delay actually relies on is from the server anyway
-     * You'll just have to refresh the page for it to count down properly.. 
-     * * * * * */
-    return () => clearTimeout(timeOut.current);
+    timeOut.current = workerTimers.setTimeout(setCounter, 1000);
+    return () => workerTimers.clearTimeout(timeOut.current);
   }, [timeRemaining]);
 
   const hours = Math.floor(timeRemaining / (60 * 60));

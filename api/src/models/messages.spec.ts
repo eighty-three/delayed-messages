@@ -1,7 +1,7 @@
 import * as messages from './messages';
-import shortid from 'shortid';
+import { nanoid } from 'nanoid';
 
-const newId = shortid.generate();
+const newId = nanoid(10);
 const dummyId = 'shortid123';
 const testTable = 'delayed_messages_test';
 const testMessage = 'test message';

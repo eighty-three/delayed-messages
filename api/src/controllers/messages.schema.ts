@@ -7,6 +7,6 @@ export const createMessage = Joi.object({
 });
 
 export const getMessage = Joi.object({
-  id: Joi.string().regex(/^[a-zA-Z0-9_-]{7,10}$/).required()
+  id: Joi.string().regex(/^[a-zA-Z0-9_-]{10}$/).required()
 });
 

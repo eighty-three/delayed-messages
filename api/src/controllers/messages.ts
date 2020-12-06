@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express';
 import { messages } from '../models';
-import shortid from 'shortid';
+import { nanoid } from 'nanoid';
 
 export const createMessage: RequestHandler = async (req, res) => {
   const { hours, minutes, message } = req.body; 
   const seconds: number = (hours === 0 && minutes === 0)
     ? 10 //If both are equal to zero, add a 10 second buffer
     : 0;
-  const id: string = shortid.generate().substr(0, 10);
+  const id: string = nanoid(10);
   const target: number = 
     Math.floor(Date.now() / 1000) +
     (hours * 3600) + (minutes * 60) + seconds;

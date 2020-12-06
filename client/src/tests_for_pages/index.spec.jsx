@@ -1,9 +1,14 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import 'jsdom-global/register';
+import 'jsdom-worker-fix';
+global.performance = require('perf_hooks').performance;
 
 import 'mutationobserver-shim';
 global.MutationObserver = window.MutationObserver;
+
+jest.mock('next/link', () => ({ children }) => children);
+// https://github.com/vercel/next.js/issues/16864
 
 import { act, render, fireEvent } from '@testing-library/react';
 import { getByLabelText, getByText } from '@testing-library/dom';
@@ -28,7 +33,7 @@ describe('components are rendering', () => {
 });
 
 describe('for submitting', () => {
-  submitMessage.mockResolvedValue(Router.push('/messages/[id]'));
+  submitMessage.mockResolvedValue(Router.push('/[id]'));
 
   afterEach(() => {
     submitMessage.mockClear();
@@ -56,7 +61,7 @@ describe('for submitting', () => {
     });
 
     expect(submitMessage).toHaveBeenCalledTimes(1);
-    expect(Router.push).toHaveBeenCalledWith('/messages/[id]');
+    expect(Router.push).toHaveBeenCalledWith('/[id]');
   });
 
   test('submit fail', async () => {

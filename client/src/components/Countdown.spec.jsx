@@ -1,6 +1,10 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import 'jsdom-global/register';
+import 'jsdom-worker-fix';
+import * as workerTimers from 'worker-timers';
+global.performance = require('perf_hooks').performance;
+
 import { render } from '@testing-library/react';
 
 import Countdown from './Countdown';
@@ -16,11 +20,11 @@ describe('testing counting down', () => {
   });
 
   test('down to 1', () => {
-    jest.useFakeTimers();
-    const component = render(<Countdown setCounter={placeholderFn} timeRemaining={1} />);
-    jest.runAllTimers();
+    const testSpy = jest.spyOn(workerTimers, 'setTimeout');
 
-    expect(placeholderFn).toHaveBeenCalledTimes(1);
+    const component = render(<Countdown setCounter={placeholderFn} timeRemaining={1} />);
+
+    expect(testSpy).toHaveBeenCalledTimes(1);
 
     expect(component.container).toHaveTextContent(
       '1 second until the message arrives!'

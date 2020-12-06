@@ -1,6 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import 'jsdom-global/register';
+import 'jsdom-worker-fix';
+import * as workerTimers from 'worker-timers';
+global.performance = require('perf_hooks').performance;
 
 import 'mutationobserver-shim';
 global.MutationObserver = window.MutationObserver;
@@ -14,8 +17,10 @@ jest.mock('ky-universal');
 import { getTime } from '@/lib/time';
 jest.mock('@/lib/time');
 
-import DelayedMessage from '@/pages/messages/[id]';
-import { getServerSideProps } from '@/pages/messages/[id]';
+jest.mock('next/link', () => ({ children }) => children);
+
+import DelayedMessage from '@/pages/[id]';
+import { getServerSideProps } from '@/pages/[id]';
 
 describe('components are rendering', () => {
   test('for Navbar', () => {
@@ -132,49 +137,17 @@ describe('testing getServerSideProps', () => {
 });
 
 describe('testing countdown', () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
+  test('it works', async () => {
+    const testSpy = jest.spyOn(workerTimers, 'setTimeout');
 
-  afterAll(() => {
-    jest.useRealTimers();
-    jest.resetAllMocks();
-  });
-
-  test('for Countdown with time left', async () => {
     const target = 100;
     const currentTime = 40;
     const component = render(<DelayedMessage target={target} currentTime={currentTime} />);
 
+    expect(testSpy).toHaveBeenCalledTimes(1);
+
     expect(getByText(component.container, '1 minute')).toBeInTheDocument();
     expect(queryByText(component.container, '2 minutes')).not.toBeInTheDocument();
     expect(getByText(component.container, 'until the message arrives!')).toBeInTheDocument;
-
-    act(() => jest.advanceTimersByTime(1000));
-
-    expect(getByText(component.container, '59 seconds')).toBeInTheDocument();
-    expect(queryByText(component.container, '1 minute')).not.toBeInTheDocument();
-  });
-
-  test('for Countdown with a second left', async () => {
-    ky.mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve({ message: 'Testing countdown', expire: 120 })
-    }));
-
-    const target = 10;
-    const currentTime = 9;
-    const component = render(<DelayedMessage target={target} currentTime={currentTime} url={'testUrl'} />);
-
-    expect(getByText(component.container, '1 second')).toBeInTheDocument();
-    expect(queryByText(component.container, '2 seconds')).not.toBeInTheDocument();
-    expect(getByText(component.container, 'until the message arrives!')).toBeInTheDocument();
-
-    await act(async () => jest.advanceTimersByTime(2000));
-    /* The linter is telling me that await has no effect on the expression
-     * but the assertion below fails if `await` and `async` is removed
-     * https://medium.com/@bmb21/reacts-sync-and-async-act-caa297b658b0
-     */
-
-    expect(getByText(component.container, 'Testing countdown')).toBeInTheDocument;
   });
 });

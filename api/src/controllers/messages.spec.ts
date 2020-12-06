@@ -1,6 +1,7 @@
 import request from 'supertest';
 import http from 'http';
 import app from '../app';
+import { nanoid } from 'nanoid';
 import * as messages from '../models/messages';
 const server = http.createServer(app).listen(8090); // Different port for tests
 
@@ -17,7 +18,7 @@ const pastExpiration: number = (currentTime + 172780) * 1000;
 
 //Dummy URLs for getMessage
 const url400 = 'abc123';
-const url404 = 'abc123x';
+const url404 = nanoid(10);
 
 //Setup and cleanup
 let testUrl_createMessage: string, testUrl_getTarget: string, testUrl_getMessage: string, testUrl_deleteUrl: string;

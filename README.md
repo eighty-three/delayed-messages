@@ -105,16 +105,11 @@ The `Countdown` component uses the following `useEffect` hook to decrease the `c
 ```
   useEffect(() => {
     if (timeRemaining >= 0) timeOut.current = setTimeout(setCounter, 1050);
-    /* setTimeout is not accurate but it only affects visual data because
-     * the time that the delay actually relies on is from the server anyway
-     * You'll just have to refresh the page for it to count down properly.. 
-     * * * * * */
     return () => clearTimeout(timeOut.current);
   }, [timeRemaining]);
 ```
 
 When the `count` finally goes to zero (`count > 0` from the `countDown` function), it queries the server to update `messageContents`
-```
 
 ### URL deleted from database
 As previously shown, if a user visits the URL of a message past its expiry, it'll finally get deleted from the database (I should probably set up a cron job for this too...)

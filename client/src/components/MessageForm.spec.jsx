@@ -5,7 +5,7 @@ import 'jsdom-global/register';
 import 'mutationobserver-shim';
 global.MutationObserver = window.MutationObserver;
 
-import { act, render, fireEvent } from '@testing-library/react';
+import { act, render, fireEvent, waitFor } from '@testing-library/preact';
 import { getByLabelText } from '@testing-library/dom';
 
 import MessageForm from './MessageForm';
@@ -37,7 +37,10 @@ describe('message form', () => {
       fireEvent.submit(form);
     });
 
-    expect(placeholderFn).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(placeholderFn).toHaveBeenCalledTimes(1);
+    });
+
     expect(placeholderFn).toHaveBeenCalledWith({
       content: 'test message form',
       hours: '23',
@@ -117,7 +120,9 @@ describe('message form', () => {
       fireEvent.submit(form);
     });
 
-    expect(placeholderFn).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(placeholderFn).toHaveBeenCalledTimes(1);
+    });
     expect(placeholderFn).toHaveBeenCalledWith({
       content: 'test message form',
       hours: '9999',

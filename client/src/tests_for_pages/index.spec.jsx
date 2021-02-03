@@ -10,7 +10,7 @@ global.MutationObserver = window.MutationObserver;
 jest.mock('next/link', () => ({ children }) => children);
 // https://github.com/vercel/next.js/issues/16864
 
-import { act, render, fireEvent } from '@testing-library/react';
+import { act, render, fireEvent, waitFor } from '@testing-library/preact';
 import { getByLabelText, getByText } from '@testing-library/dom';
 
 import Router from 'next/router';
@@ -60,7 +60,9 @@ describe('for submitting', () => {
       fireEvent.submit(form);
     });
 
-    expect(submitMessage).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(submitMessage).toHaveBeenCalledTimes(1);
+    });
     expect(Router.push).toHaveBeenCalledWith('/[id]');
   });
 

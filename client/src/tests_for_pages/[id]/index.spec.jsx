@@ -8,7 +8,7 @@ global.performance = require('perf_hooks').performance;
 import 'mutationobserver-shim';
 global.MutationObserver = window.MutationObserver;
 
-import { render, act } from '@testing-library/react';
+import { render, act } from '@testing-library/preact';
 import { getByText, queryByText } from '@testing-library/dom';
 
 import ky from 'ky-universal';

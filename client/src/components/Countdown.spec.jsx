@@ -5,7 +5,7 @@ import 'jsdom-worker-fix';
 import * as workerTimers from 'worker-timers';
 global.performance = require('perf_hooks').performance;
 
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/preact';
 
 import Countdown from './Countdown';
 

@@ -5,6 +5,8 @@ your message. A countdown is displayed until it's time to show its contents
 
 https://eighty-three.dev/projects/delayed-messages/
 
+Created 2020, removed commits due to credentials issue
+
 ## Usage
 Write any message (up to 250 characters) in the main field. You can choose how long the delay will take by setting the hours and the minutes. There's a maximum of 23 hours and 59 minutes, and a minimum of 0 hours and 0 minutes which translates to a 10 second delay
 ![Message](/docs/message.png)
